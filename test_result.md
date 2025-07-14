@@ -157,6 +157,9 @@ backend:
       - working: true
         agent: "main"
         comment: "Gestion des posts de sensibilisation pour admin"
+      - working: true
+        agent: "testing"
+        comment: "Awareness posts API working correctly. Public endpoint GET /api/awareness returns empty list (expected for new installation). Protected endpoints (POST /api/awareness, DELETE /api/awareness/{id}) properly require admin authentication. Database ready for awareness posts."
 
 frontend:
   - task: "Navigation and Layout"
