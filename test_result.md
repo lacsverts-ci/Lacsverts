@@ -127,6 +127,9 @@ backend:
       - working: true
         agent: "main"
         comment: "CRUD pour les lacs avec données de base de Côte d'Ivoire"
+      - working: true
+        agent: "testing"
+        comment: "Lakes API fully functional. Sample data correctly initialized with 4 lakes from Côte d'Ivoire (Kossou, Buyo, Taabo, Ayamé). All endpoints working: GET /api/lakes (list), GET /api/lakes/{id} (individual), PUT /api/lakes/{id}/status (admin only). Data structure validated with proper fields and status values."
   
   - task: "API Reports System"
     implemented: true
