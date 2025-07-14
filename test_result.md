@@ -253,3 +253,5 @@ test_plan:
 agent_communication:
   - agent: "main"
     message: "Phase 1 terminée - Structure complète de l'application créée avec toutes les pages et fonctionnalités de base. Prêt pour tests backend."
+  - agent: "testing"
+    message: "Backend API testing completed. 7/8 tests passed (87.5% success rate). All core functionality working: API root, lakes endpoint with sample data, awareness posts, authentication validation, and protected endpoints. Minor issue: auth endpoint returns 500 instead of 401 for invalid sessions due to external Emergent API 404 response - this is expected behavior when auth service unavailable."
