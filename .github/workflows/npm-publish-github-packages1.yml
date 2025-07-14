@@ -1,0 +1,60 @@
+# This workflow will run tests using node and then publish a package to GitHub Packages when a release is created
+# For more information see: https://docs.github.com/en/actions/publishing-packages/publishing-nodejs-packages
+
+name: Node.js Package
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm ci
+      - run: npm test
+
+  publish-gpr:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: https://npm.pkg.github.com/
+      - run: npm ci
+      - run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+            - nom : Configuration de l'environnement Node.js
+  utilisations : actions/setup-node@v3.9.1
+  avec:
+    # Définir always-auth dans npmrc.
+    always-auth : # facultatif, la valeur par défaut est false
+    # Spécification de la version à utiliser. Exemples : 12.x, 10.15.1, >=10.15.0.
+    version-noeud : # facultatif
+    # Fichier contenant la spécification de version de la version à utiliser. Exemples : .nvmrc, .node-version, .tool-versions.
+    fichier-version-noeud : # facultatif
+    # Architecture cible à utiliser par Node. Exemples : x86, x64. L'architecture système sera utilisée par défaut.
+    architecture : # facultatif
+    # Définissez cette option si vous souhaitez que l'action vérifie la dernière version disponible qui satisfait aux spécifications de version.
+    check-latest : # facultatif
+    # Registre facultatif à configurer pour l'authentification. Ce registre sera défini dans un fichier .npmrc et .yarnrc au niveau du projet, et l'authentification sera configurée pour lire depuis env.NODE_AUTH_TOKEN.
+    registry-url : # facultatif
+    # Portée facultative pour l'authentification auprès des registres délimités. Le propriétaire du dépôt sera utilisé lors de l'utilisation du registre des packages GitHub (https://npm.pkg.github.com/).
+    portée : # facultatif
+    # Utilisé pour extraire les distributions de nœuds depuis les versions de nœuds. Puisqu'il existe une valeur par défaut, elle n'est généralement pas fournie par l'utilisateur. Lorsque cette action est exécutée sur github.com, la valeur par défaut est suffisante. Lorsque vous exécutez cette action sur GHES, vous pouvez transmettre un jeton d'accès personnel pour github.com si vous rencontrez une limitation de débit.
+    jeton : # facultatif, la valeur par défaut est ${{ github.server_url == 'https://github.com' && github.token || '' }}
+    # Permet de spécifier un gestionnaire de paquets pour la mise en cache dans le répertoire par défaut. Valeurs prises en charge : npm, yarn, pnpm.
+    cache : # facultatif
+    # Utilisé pour spécifier le chemin vers un fichier de dépendance : package-lock.json, yarn.lock, etc. Prend en charge les caractères génériques ou une liste de noms de fichiers pour la mise en cache de plusieurs dépendances.
+    cache-dependency-path : # facultatif
+          
