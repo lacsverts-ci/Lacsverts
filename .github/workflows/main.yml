@@ -1,0 +1,48 @@
+nom : Créer un APK Android avec extraction OSM
+
+sur:
+  pousser:
+    succursales:
+      - principal
+  pull_request:
+    succursales:
+      - principal
+
+emplois:
+  construire:
+    fonctionne sur : ubuntu-latest
+
+    mesures:
+      - nom : Code de paiement
+        utilisations : actions/checkout@v4
+
+      - nom : Configurer Python
+        utilisations : actions/setup-python@v5
+        avec:
+          version python : « 3.11 »
+
+      - nom : Extraire tous les plans d'eau Côte d'Ivoire (OSM â†' GeoJSON)
+        exécuter : python scripts/extract_lacs_cotedivoire.py
+
+      - nom : Configurer JDK
+        utilisations : actions/setup-java@v4
+        avec:
+          distribution : 'témurin'
+          version java : '17'
+
+      - nom : Cache des packages Gradle
+        utilisations : actions/cache@v4
+        avec:
+          chemin : |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          clé : gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+
+      - nom : Build APK
+        exécuter : ./gradlew assembleRelease
+
+      - nom : Télécharger APK
+        utilisations : actions/upload-artifact@v4
+        avec:
+          nom : lacsverts-apk
+          chemin : app/build/outputs/apk/release/app-release.apk
