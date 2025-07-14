@@ -142,6 +142,9 @@ backend:
       - working: true
         agent: "main"
         comment: "Système de signalement avec upload d'images/vidéos en base64"
+      - working: true
+        agent: "testing"
+        comment: "Reports system working correctly. Protected endpoints (POST /api/reports, GET /api/reports) properly require authentication. Public endpoint GET /api/reports/lake/{id} works without auth. Database ready for report storage."
   
   - task: "API Awareness Posts"
     implemented: true
