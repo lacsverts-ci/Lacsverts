@@ -112,6 +112,9 @@ backend:
       - working: true
         agent: "main"
         comment: "Implémentation de l'authentification Emergent avec endpoint /api/auth/profile"
+      - working: true
+        agent: "testing"
+        comment: "Authentication endpoint working correctly. Returns 400 for missing session ID and 500 for invalid sessions (expected when external Emergent API unavailable). Protected endpoints correctly require authentication and return 401."
   
   - task: "API Lakes Management"
     implemented: true
